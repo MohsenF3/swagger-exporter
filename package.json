@@ -1,0 +1,22 @@
+{
+  "name": "swagger-exporter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit && vite build",
+    "dev": "vite build --watch",
+    "test": "node --experimental-strip-types --test tests/*.test.ts",
+    "check": "npm test && npm run build",
+    "test:layout": "node tests/layout.mjs"
+  },
+  "dependencies": {
+    "yaml": "^2.8.1"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.1.24",
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.2"
+  }
+}

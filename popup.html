@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Swagger Exporter</title><link rel="stylesheet" href="/src/style.css"></head>
+<body class="popup">
+  <header><span class="brand-mark" aria-hidden="true">{ }</span><h1>Swagger Exporter</h1></header>
+  <p>Open an endpoint in Swagger. Bring its contract here.</p>
+  <button id="extract" class="primary">Extract current endpoint</button>
+  <p id="status" role="status" aria-live="polite">Your browser handles login. Documents stay local.</p>
+  <ul id="candidates" aria-label="Discovered specification URLs"></ul>
+  <button id="import">Import JSON / YAML instead</button>
+  <script type="module" src="/src/popup.ts"></script>
+</body>
+</html>

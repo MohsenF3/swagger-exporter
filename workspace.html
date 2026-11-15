@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Swagger Exporter — Contract workspace</title></head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="workspace.html"><span class="brand-mark" aria-hidden="true">{ }</span>Swagger Exporter</a>
+    <span class="privacy">Local workspace · No uploads</span>
+    <label class="file-button" for="file">Import JSON / YAML<input id="file" type="file" accept=".json,.yaml,.yml,application/json,application/yaml"></label>
+  </header>
+  <div id="status" class="notice" role="status" aria-live="polite">Open Swagger and click extension, or import a specification to begin.</div>
+  <main class="workspace">
+    <aside class="rail" aria-label="Endpoint selection">
+      <details id="endpoint-picker" open>
+        <summary>Endpoints <span id="count">0</span></summary>
+        <div class="picker-content">
+          <label for="search">Find by path, tag, or operation ID</label>
+          <input id="search" type="search" placeholder="Search endpoints" autocomplete="off">
+          <nav id="endpoints" aria-label="Endpoints"></nav>
+        </div>
+      </details>
+    </aside>
+    <article class="document" aria-label="Contract preview">
+      <div id="empty" class="empty"><span class="empty-symbol" aria-hidden="true">{ contract }</span><h2>One endpoint.<br>Everything documented.</h2><p>Parameters, request bodies, responses, and related schemas—ready to share.</p><p>Private documentation stays in this browser. Review examples before sharing exports.</p></div>
+      <section id="preview" hidden>
+        <div class="contract-heading"><span id="method" class="method"></span><h2 id="path" tabindex="-1"></h2></div>
+        <p id="summary"></p>
+        <div class="export-options">
+          <label for="export-mode">Document format</label>
+          <select id="export-mode"><option value="readable">Readable documentation</option><option value="raw">Raw contract</option></select>
+          <label class="checkbox-label"><input id="generated-examples" type="checkbox" checked> Include illustrative generated examples</label>
+        </div>
+        <div class="toolbar" aria-label="Export contract">
+          <button id="copy" class="primary">Copy Markdown</button>
+        </div>
+        <section class="warnings" aria-label="Contract warnings"><h3>Before sharing</h3><ul id="warnings"></ul></section>
+        <div id="sections"></div>
+      </section>
+    </article>
+  </main>
+  <script type="module" src="/src/workspace.ts"></script>
+</body>
+</html>

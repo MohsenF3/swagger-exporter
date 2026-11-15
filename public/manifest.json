@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "Swagger Exporter",
+  "description": "Extract an endpoint from Swagger. Preview locally and copy its contract as Markdown.",
+  "version": "0.1.0",
+  "minimum_chrome_version": "111",
+  "permissions": ["activeTab", "scripting"],
+  "action": {
+    "default_title": "Export Swagger endpoint",
+    "default_popup": "popup.html"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'; connect-src 'none'; base-uri 'none'"
+  }
+}

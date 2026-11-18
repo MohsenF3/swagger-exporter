@@ -9,7 +9,7 @@
   </header>
   <div id="status" class="notice" role="status" aria-live="polite">Open Swagger and click extension, or import a specification to begin.</div>
   <main class="workspace">
-    <aside class="rail" aria-label="Endpoint selection">
+    <aside id="sidebar" class="rail" aria-label="Endpoint selection">
       <details id="endpoint-picker" open>
         <summary>Endpoints <span id="count">0</span></summary>
         <div class="picker-content">
@@ -19,6 +19,7 @@
         </div>
       </details>
     </aside>
+    <div id="splitter" role="separator" tabindex="0" aria-label="Resize endpoint sidebar" aria-orientation="vertical" aria-controls="sidebar" aria-valuemin="0" aria-valuenow="320" title="Drag to resize. Arrow keys adjust width; Home/End move to either edge."></div>
     <article class="document" aria-label="Contract preview">
       <div id="empty" class="empty"><span class="empty-symbol" aria-hidden="true">{ contract }</span><h2>One endpoint.<br>Everything documented.</h2><p>Parameters, request bodies, responses, and related schemas—ready to share.</p><p>Private documentation stays in this browser. Review examples before sharing exports.</p></div>
       <section id="preview" hidden>

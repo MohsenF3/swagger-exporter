@@ -25,6 +25,47 @@ picker.querySelector('summary')!.addEventListener('click', event => {
 });
 mobile.addEventListener('change', () => { picker.open = !mobile.matches || !selected; });
 
+const workspace = document.querySelector<HTMLElement>('.workspace')!;
+const splitter = get('splitter');
+let sidebarWidth = 320;
+let drag: { pointer: number; offset: number } | undefined;
+function resizeSidebar(width: number): void {
+  if (mobile.matches) return;
+  const max = workspace.clientWidth - splitter.offsetWidth;
+  sidebarWidth = Math.round(Math.max(0, Math.min(max, width)));
+  workspace.style.setProperty('--sidebar-width', `${sidebarWidth}px`);
+  splitter.setAttribute('aria-valuemax', String(max));
+  splitter.setAttribute('aria-valuenow', String(sidebarWidth));
+  splitter.setAttribute('aria-valuetext', `${sidebarWidth} pixels`);
+}
+splitter.addEventListener('pointerdown', event => {
+  if (event.button !== 0 || mobile.matches) return;
+  event.preventDefault();
+  splitter.focus({ preventScroll: true });
+  drag = { pointer: event.pointerId, offset: event.clientX - splitter.getBoundingClientRect().left };
+  splitter.setPointerCapture(event.pointerId);
+  document.body.classList.add('resizing');
+});
+splitter.addEventListener('pointermove', event => {
+  if (drag?.pointer === event.pointerId) resizeSidebar(event.clientX - workspace.getBoundingClientRect().left - drag.offset);
+});
+const stopResizing = () => {
+  const pointer = drag?.pointer;
+  drag = undefined;
+  document.body.classList.remove('resizing');
+  if (pointer !== undefined && splitter.hasPointerCapture(pointer)) splitter.releasePointerCapture(pointer);
+};
+splitter.addEventListener('pointerup', stopResizing);
+splitter.addEventListener('pointercancel', stopResizing);
+splitter.addEventListener('lostpointercapture', stopResizing);
+mobile.addEventListener('change', stopResizing);
+splitter.addEventListener('keydown', event => {
+  if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+  event.preventDefault();
+  resizeSidebar(event.key === 'Home' ? 0 : event.key === 'End' ? workspace.clientWidth : sidebarWidth + (event.key === 'ArrowRight' ? 1 : -1) * (event.shiftKey ? 50 : 10));
+});
+new ResizeObserver(() => resizeSidebar(sidebarWidth)).observe(workspace);
+
 function show(operation: Operation, navigate = true): void {
   if (!documentValue) return;
   try {

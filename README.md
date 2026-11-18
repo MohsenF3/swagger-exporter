@@ -51,6 +51,8 @@ External `$ref` fetching, advanced discriminator/mapping dependency discovery, r
 
 Popup and workspace follow your system light/dark preference automatically, including controls, tables, code blocks, and warnings. No theme setting or saved preference.
 
+Drag desktop divider to resize endpoint sidebar; document takes remaining width. Focus divider and use Left/Right arrows (10 px, Shift for 50 px), Home/End to move to either edge. No fixed pane-width limits; either pane can shrink to zero, with divider kept accessible inside workspace. Width lasts until workspace closes; mobile uses stacked layout without divider.
+
 Desktop header, endpoint sidebar, and export toolbar stay visible while the document scrolls. Only endpoint list scrolls inside sidebar; search stays visible. Selecting another endpoint returns document to its heading without resetting sidebar position. Changing export options preserves document position. Narrow screens use a collapsible endpoint picker and move focus to selected document heading. Schema/code blocks have no vertical height cap; wide content scrolls horizontally.
 
 Run `npm run test:layout` after building to check these behaviors in headless Chrome (requires `google-chrome`, or set `CHROME_BIN`). Test launches an isolated temporary browser profile. `TMPDIR=/tmp/opencode` selects the preferred temporary location in this environment.

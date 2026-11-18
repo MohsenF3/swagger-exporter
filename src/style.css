@@ -61,7 +61,8 @@ button:hover, .file-button:hover { background: var(--hover); }
 button:disabled { opacity: .6; cursor: wait; }
 button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 button.primary:hover { background: var(--accent-hover); }
-:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+:focus { outline: none; }
+:where(.brand, summary, .table-scroll, .checkbox-label, #path) { border: 1px solid transparent; }
 input { width: 100%; padding: 10px 12px; border: 1px solid var(--control-line); border-radius: 6px; background: var(--surface); color: var(--ink); }
 label { display: block; font-size: 13px; margin-bottom: 8px; }
 [hidden] { display: none !important; }
@@ -79,13 +80,11 @@ label { display: block; font-size: 13px; margin-bottom: 8px; }
 .privacy { color: var(--muted); font-size: 13px; margin-left: auto; }
 .file-button { position: relative; display: inline-block; margin: 0; font-size: 14px; font-weight: 600; }
 .file-button input { position: absolute; width: 1px; height: 1px; opacity: 0; padding: 0; }
-.file-button:focus-within { outline: 3px solid var(--focus); outline-offset: 3px; }
 .notice { padding: 12px 32px; border-bottom: 1px solid var(--line); font-size: 14px; background: var(--notice); overflow-wrap: anywhere; }
 .workspace { display: grid; grid-template-columns: var(--sidebar-width, 320px) 10px minmax(0, 1fr); align-items: start; min-height: calc(100dvh - var(--header-height)); }
 #splitter { position: sticky; top: var(--header-height); height: calc(100dvh - var(--header-height)); cursor: col-resize; touch-action: none; background: var(--page); border-inline: 1px solid var(--line); }
 #splitter::after { content: ''; position: absolute; top: calc(50% - 24px); left: 3px; width: 2px; height: 48px; background: var(--control-line); border-radius: 2px; }
 #splitter:hover, #splitter:focus-visible, .resizing #splitter { background: var(--selected); }
-#splitter:focus-visible { outline-offset: -3px; z-index: 11; }
 .resizing, .resizing * { cursor: col-resize !important; user-select: none; }
 .rail { position: sticky; top: var(--header-height); height: calc(100dvh - var(--header-height)); min-height: 0; min-width: 0; overflow: clip; padding: 24px min(18px, var(--sidebar-width, 320px) / 2); }
 #endpoint-picker { height: 100%; }
@@ -132,6 +131,8 @@ table { border-collapse: collapse; width: 100%; font-size: 13px; }
 th, td { text-align: left; vertical-align: top; padding: 12px; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
 th { background: var(--page); }
 td:nth-child(4) { min-width: 160px; }
+:root :focus-visible, .file-button:focus-within, .checkbox-label:has(input:focus-visible) { border-color: var(--focus); }
+#splitter:focus-visible { border-inline-color: var(--focus); }
 @media (max-width: 800px) {
   .topbar { flex-wrap: wrap; gap: 16px; padding: 16px; }
   .privacy { margin-left: 0; }

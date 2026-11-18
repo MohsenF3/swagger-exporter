@@ -103,6 +103,9 @@ try {
   assert.equal(await evaluate('document.querySelector(".document").getBoundingClientRect().width'), split.document - 100);
   assert.equal(await evaluate('document.getElementById("splitter").getAttribute("aria-valuenow")'), '420');
   assert.equal(await evaluate('document.body.classList.contains("resizing")'), false);
+  const dividerFocus = await evaluate(`(() => { const s = getComputedStyle(document.getElementById('splitter')); return { outline: s.outlineStyle, border: s.borderLeftColor, focus: getComputedStyle(document.documentElement).getPropertyValue('--focus').trim() }; })()`);
+  assert.equal(dividerFocus.outline, 'none');
+  assert.equal(dividerFocus.border, 'rgb(173, 91, 0)');
   await send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'ArrowLeft', code: 'ArrowLeft' });
   assert.equal(await evaluate('document.querySelector(".rail").getBoundingClientRect().width'), 410);
   await send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'End', code: 'End' });
@@ -162,6 +165,24 @@ try {
     for (const color of colors) {
       const a = luminance(color.text), b = luminance(color.background);
       assert.ok((Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05) >= 4.5, `${theme} contrast: ${color.selector}`);
+    }
+    await evaluate('document.getElementById("endpoint-picker").open = true');
+    await send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Tab', code: 'Tab' });
+    await send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Tab', code: 'Tab' });
+    const focusStyles = await evaluate(`(() => {
+      const ids = ['search', 'export-mode', 'copy', 'generated-examples', 'file'];
+      return ids.map(id => {
+        const element = document.getElementById(id);
+        element.focus();
+        const style = getComputedStyle(element);
+        const visible = getComputedStyle(id === 'file' || id === 'generated-examples' ? element.parentElement : element);
+        return { id, focused: element === document.activeElement, visible: element.matches(':focus-visible'), outline: style.outlineStyle, shadow: style.boxShadow, border: visible.borderTopColor };
+      });
+    })()`);
+    for (const focus of focusStyles) {
+      assert.equal(focus.outline, 'none');
+      assert.equal(focus.shadow, 'none');
+      assert.equal(focus.border, theme === 'dark' ? 'rgb(241, 183, 92)' : 'rgb(173, 91, 0)', JSON.stringify(focus));
     }
     assert.equal(colors[0].background, theme === 'dark' ? 'rgb(21, 35, 48)' : 'rgb(237, 243, 249)');
     assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'), `${theme} horizontal overflow`);
